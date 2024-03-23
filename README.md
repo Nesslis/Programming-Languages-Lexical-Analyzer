@@ -41,4 +41,89 @@ Group Members:
 make
 ./SelfScript < example.self
 
-## Syntax
+## Syntax in BNF
+
+<program> ::= <statement_list>
+
+<statement_list> ::= <statement> | <statement_list> <statement>
+
+<statement> ::= <assignment_statement>
+              | <conditional_statement>
+              | <loop_statement>
+              | <output_statement>
+              | <return_statement>
+              | <comment_statement>
+              | <method_declaration>
+
+<assignment_statement> ::= <variable> '=' <expression> ';'
+
+<conditional_statement> ::= <if_statement>
+                           | <else_if_statement>
+                           | <else_statement>
+
+<if_statement> ::= 'whynot' '(' <condition> ')' <block>
+
+<else_if_statement> ::= 'whynotagain' '(' <condition> ')' <block>
+
+<else_statement> ::= 'otherwise' <block>
+
+<loop_statement> ::= 'loopy' <loop_type>
+
+<loop_type> ::= <while_loop> | <for_loop>
+
+<while_loop> ::= '(' <condition> ')' <block>
+
+<for_loop> ::= '(' <init_statement> ';' <condition> ';' <update_statement> ')' <block>
+
+<init_statement> ::= <assignment_statement>
+
+<update_statement> ::= <assignment_statement>
+
+<output_statement> ::= 'giggle' '(' <expression> ')' ';'
+
+<return_statement> ::= 'echo' <expression> ';'
+
+<comment_statement> ::= '//' <comment_text>
+
+<method_declaration> ::= 'metoot' <method_signature> <block>
+
+<method_signature> ::= <identifier> '(' <parameter_list> ')' 
+<parameter_list> ::= <parameter> | <parameter_list> ',' <parameter>
+<parameter> ::= <type> <identifier>
+
+<block> ::= '{' <statement_list> '}'
+
+<expression> ::= <term> | <expression> <add_operator> <term>
+
+<term> ::= <factor> | <term> <mult_operator> <factor>
+
+<factor> ::= <variable> | <value> | '(' <expression> ')' | <unary_operator> <factor>
+
+<value> ::= <integer> | <float> | <string> | <boolean>
+
+<integer> ::= [0-9]+
+
+<float> ::= [0-9]+\.[0-9]+
+
+<string> ::= '"' <characters> '"'
+
+<boolean> ::= 'true' | 'false'
+
+<identifier> ::= [a-zA-Z_][a-zA-Z0-9_]*
+
+<characters> ::= <character> | <characters> <character>
+
+<character> ::= <letter> | <digit> | <special_character>
+
+<letter> ::= [a-zA-Z]
+
+<digit> ::= [0-9]
+
+<special_character> ::= [!@#$%^&*()_+{}\[\]:;<>,.?/~`|-]
+
+<add_operator> ::= '+' | '-'
+
+<mult_operator> ::= '*' | '/'
+
+<unary_operator> ::= '!' | 'not'
+

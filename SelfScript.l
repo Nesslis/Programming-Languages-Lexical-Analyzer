@@ -5,6 +5,14 @@
 
 %option noyywrap
 
+/* Constants */
+%{
+#define PI 3.14159
+#define SPEED_OF_LIGHT 299792458
+#define GRAVITATIONAL_CONSTANT 6.67430e-11
+#define PLANCK_CONSTANT 6.62607015e-34
+%}
+
 /* Token Definitions */
 %{
 #define INT_TYPE            1
@@ -41,9 +49,14 @@
 #define SCAN_KEYWORD        32
 #define COMMENT             33
 #define UNKNOWN_TOKEN       34
+#define CONSTANT            35
 %}
 
 %%
+"PI"                    { printf("CONSTANT: PI\n"); return CONSTANT; }
+"SPEED_OF_LIGHT"        { printf("CONSTANT: SPEED_OF_LIGHT\n"); return CONSTANT; }
+"GRAVITY" { printf("CONSTANT: GRAVITATIONAL_CONSTANT\n"); return CONSTANT; }
+"PLANCK"       { printf("CONSTANT: PLANCK_CONSTANT\n"); return CONSTANT; }
 "int"                   { printf("INT_TYPE\n"); return INT_TYPE; }
 "str"                   { printf("STRING_TYPE\n"); return STRING_TYPE; }
 "flo"                   { printf("FLOAT_TYPE\n"); return FLOAT_TYPE; }
@@ -77,7 +90,6 @@ true|false              { printf("BOOLEAN: %s\n", yytext); return BOOLEAN; }
 "//"([^"\n])*            { /* Single-line comment, ignore */ }
 "/\*".*"\*/"             { /* Multi-line comment, ignore */ }
 [ \t\r]                  { /* Ignore whitespace */ }
-
 .                       { printf("UNKNOWN_TOKEN: %s\n", yytext); return UNKNOWN_TOKEN; }
 %%
 

@@ -1,6 +1,6 @@
-myprog: myprog.l
-	lex myprog.l
-	gcc -o myprog lex.yy.c -ll
+SelfScript: SelfScript.l
+	lex SelfScript.l
+	gcc -o SelfScript lex.yy.c -ll
 
 clean:
-	rm myprog lex.yy.c
+	rm SelfScript lex.yy.c

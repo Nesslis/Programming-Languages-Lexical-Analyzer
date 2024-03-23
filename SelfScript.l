@@ -75,8 +75,9 @@
 true|false              { printf("BOOLEAN: %s\n", yytext); return BOOLEAN; }
 [a-zA-Z_][a-zA-Z0-9_]*  { printf("IDENTIFIER: %s\n", yytext); return IDENTIFIER; }
 "//"([^"\n])*            { /* Single-line comment, ignore */ }
-"/\"."\/"             { / Multi-line comment, ignore */ }
-[ \t\r]                 ; { /* Ignore whitespaces */ }
+"/\*".*"\*/"             { /* Multi-line comment, ignore */ }
+[ \t\r]                  { /* Ignore whitespace */ }
+
 .                       { printf("UNKNOWN_TOKEN: %s\n", yytext); return UNKNOWN_TOKEN; }
 %%
 

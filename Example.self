@@ -44,7 +44,7 @@ metoot add(a, b) {
     echo a + b ;
 }
 
-var result = add(5, 3);
+int result = add(5, 3);
 giggle("Result: " + result);
 
 

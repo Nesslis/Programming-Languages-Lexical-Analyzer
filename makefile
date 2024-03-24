@@ -1,6 +1,9 @@
 SelfScript: SelfScript.l
-	lex SelfScript.l
-	gcc -o SelfScript lex.yy.c -ll
+	flex SelfScript.l
+	gcc -o tokens SelfScanner.c -lfl
+
+test: SelfScript
+	./tokens Example.self
 
 clean:
-	rm SelfScript lex.yy.c
+	rm -f tokens lex.yy.c

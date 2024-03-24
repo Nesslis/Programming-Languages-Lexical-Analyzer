@@ -1,62 +1,17 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "tokens.h"
 %}
 
 %option noyywrap
 
-/* Constants */
-%{
-#define PI 3.14159
-#define SPEED_OF_LIGHT 299792458
-#define GRAVITATIONAL_CONSTANT 6.67430e-11
-#define PLANCK_CONSTANT 6.62607015e-34
-%}
-
-/* Token Definitions */
-%{
-#define INT_TYPE            1
-#define STRING_TYPE         2
-#define FLOAT_TYPE          3
-#define BOOLEAN_TYPE        4
-#define IF_KEYWORD          5
-#define ELSEIF_KEYWORD      6
-#define ELSE_KEYWORD        7
-#define LOOP_KEYWORD        8
-#define METHOD_KEYWORD      9
-#define RETURN_KEYWORD      10
-#define PRINT_FUNCTION      11
-#define SCAN_FUNCTION       12
-#define SEMICOLON           13
-#define ADD_OP              14
-#define SUB_OP              15
-#define MULT_OP             16
-#define DIV_OP              17
-#define ASSIGN_OP           18
-#define LEFT_PAREN          19
-#define RIGHT_PAREN         20
-#define LEFT_BRACE          21
-#define RIGHT_BRACE         22
-#define COMMA               23
-#define INTEGER             24
-#define FLOAT               25
-#define STRING              26
-#define BOOLEAN             27
-#define IDENTIFIER          28
-#define LESS_THAN           29
-#define GREATER_THAN        30
-#define WHILE_KEYWORD       31
-#define SCAN_KEYWORD        32
-#define COMMENT             33
-#define UNKNOWN_TOKEN       34
-#define CONSTANT            35
-%}
-
 %%
+
 "PI"                    { printf("CONSTANT: PI\n"); return CONSTANT; }
 "SPEED_OF_LIGHT"        { printf("CONSTANT: SPEED_OF_LIGHT\n"); return CONSTANT; }
-"GRAVITY" { printf("CONSTANT: GRAVITATIONAL_CONSTANT\n"); return CONSTANT; }
-"PLANCK"       { printf("CONSTANT: PLANCK_CONSTANT\n"); return CONSTANT; }
+"GRAVITY"               { printf("CONSTANT: GRAVITATIONAL_CONSTANT\n"); return CONSTANT; }
+"PLANCK"                { printf("CONSTANT: PLANCK_CONSTANT\n"); return CONSTANT; }
 "int"                   { printf("INT_TYPE\n"); return INT_TYPE; }
 "str"                   { printf("STRING_TYPE\n"); return STRING_TYPE; }
 "flo"                   { printf("FLOAT_TYPE\n"); return FLOAT_TYPE; }
@@ -69,6 +24,7 @@
 "echo"                  { printf("RETURN_KEYWORD\n"); return RETURN_KEYWORD; }
 "giggle"                { printf("PRINT_FUNCTION\n"); return PRINT_FUNCTION; }
 "read"                  { printf("SCAN_FUNCTION\n"); return SCAN_FUNCTION; }
+"nochange"              { printf("FINAL_KEYWORD\n"); return FINAL_KEYWORD;}
 ";"                     { printf("SEMICOLON\n"); return SEMICOLON; }
 ","                     { printf("COMMA\n"); return COMMA; }
 "+"                     { printf("ADD_OP\n"); return ADD_OP; }
@@ -91,18 +47,11 @@ true|false              { printf("BOOLEAN: %s\n", yytext); return BOOLEAN; }
 "/\*".*"\*/"             { /* Multi-line comment, ignore */ }
 [ \t\r]                  { /* Ignore whitespace */ }
 .                       { printf("UNKNOWN_TOKEN: %s\n", yytext); return UNKNOWN_TOKEN; }
+<<EOF>>                 { return EOF; } // Handle end of file
 %%
 
 int my_yywrap() {
     return 1;
 }
 
-int main() {
-    int token;
-    
-    do {
-        token = yylex();
-    } while (token != 0);
 
-    return 0;
-}
